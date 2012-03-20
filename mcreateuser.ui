@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mCreateUserClass</class>
+ <widget class="QWidget" name="mCreateUserClass">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>335</width>
+    <height>231</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>335</width>
+    <height>231</height>
+   </size>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="labelNumberPort_2">
+       <property name="text">
+        <string>Номер порта</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxNumberPort">
+       <property name="maximum">
+        <number>999999</number>
+       </property>
+       <property name="value">
+        <number>2323</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QGraphicsView" name="graphicsView">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>120</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>120</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelSurname">
+         <property name="text">
+          <string>Фамилия</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEditSurname"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelUser">
+         <property name="text">
+          <string>Ник</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEditUser"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelName">
+         <property name="text">
+          <string>Имя</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEditName"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelPatronymic">
+         <property name="text">
+          <string>Отчество</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEditPatronymic"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="labelPost">
+       <property name="text">
+        <string>Должность</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditPost"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>198</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSave">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Сохранить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>spinBoxNumberPort</tabstop>
+  <tabstop>lineEditUser</tabstop>
+  <tabstop>lineEditSurname</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>lineEditPatronymic</tabstop>
+  <tabstop>lineEditPost</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>graphicsView</tabstop>
+ </tabstops>
+ <resources>
+  <include location="systray.qrc"/>
+ </resources>
+ <connections/>
+</ui>

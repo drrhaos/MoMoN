@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/actions">
+        <file>icon/delete_user.png</file>
+        <file>icon/exit.png</file>
+        <file>icon/help.png</file>
+        <file>icon/logo_qt.png</file>
+        <file>icon/offline.png</file>
+        <file>icon/online.png</file>
+        <file>icon/settings.png</file>
+        <file>icon/messege.png</file>
+    </qresource>
+    <qresource prefix="/list">
+        <file>icon/online_list.png</file>
+        <file>icon/offline_list.png</file>
+        <file>icon/new_message_list.png</file>
+    </qresource>
+    <qresource prefix="/tray">
+        <file>icon/messege1.png</file>
+        <file>icon/messege2.png</file>
+        <file>icon/messege.png</file>
+        <file>icon/messege3.png</file>
+        <file>icon/messege4.png</file>
+        <file>icon/offline.png</file>
+        <file>icon/online.png</file>
+        <file>icon/connect0.png</file>
+        <file>icon/connect45.png</file>
+        <file>icon/connect90.png</file>
+    </qresource>
+    <qresource prefix="/button">
+        <file>icon/play.png</file>
+        <file>icon/onlinepop.png</file>
+        <file>icon/send_to_file.png</file>
+        <file>icon/font_bold.png</file>
+        <file>icon/font_Italic.png</file>
+        <file>icon/font_underlining.png</file>
+        <file>icon/smile.png</file>
+        <file>icon/clear.png</file>
+    </qresource>
+</RCC>

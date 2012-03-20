@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qlocmes</class>
+ <widget class="QMainWindow" name="qlocmes">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>437</width>
+    <height>405</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">MoMoN</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="systray.qrc">
+    <normaloff>:/tray/icon/online.png</normaloff>:/tray/icon/online.png</iconset>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0">
+    <property name="margin">
+     <number>1</number>
+    </property>
+    <item>
+     <widget class="QTreeView" name="treeView">
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>437</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Меню</string>
+    </property>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>Статус</string>
+     </property>
+     <property name="icon">
+      <iconset resource="systray.qrc">
+       <normaloff>:/actions/icon/online.png</normaloff>:/actions/icon/online.png</iconset>
+     </property>
+     <addaction name="actionOnLine"/>
+     <addaction name="actionOffLIne"/>
+    </widget>
+    <addaction name="menu"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
+    <addaction name="actionHelpQt"/>
+    <addaction name="actionHelpQlocmessege"/>
+    <addaction name="separator"/>
+    <addaction name="actionHelp"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetData">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllDockWidgetAreas</set>
+   </property>
+   <property name="windowTitle">
+    <string>Данные контакта</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+         </property>
+         <item row="0" column="0">
+          <widget class="QGraphicsView" name="graphicsViewFoto">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>120</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>120</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelSurname">
+               <property name="text">
+                <string>Фамилия</string>
+               </property>
+               <property name="buddy">
+                <cstring>lineEditSurname</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEditSurname">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelName">
+               <property name="text">
+                <string>Имя</string>
+               </property>
+               <property name="buddy">
+                <cstring>lineEditName</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEditName">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="labelPatronymic">
+               <property name="text">
+                <string>Отчество</string>
+               </property>
+               <property name="buddy">
+                <cstring>lineEditPatronymic</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEditPatronymic">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>18</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="labelPost">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="text">
+            <string>Должность</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEditPost</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPost">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>26</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionOnLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/online.png</normaloff>:/actions/icon/online.png</iconset>
+   </property>
+   <property name="text">
+    <string>В сети</string>
+   </property>
+  </action>
+  <action name="actionOffLIne">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/offline.png</normaloff>:/actions/icon/offline.png</iconset>
+   </property>
+   <property name="text">
+    <string>Не в сети</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/settings.png</normaloff>:/actions/icon/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/exit.png</normaloff>:/actions/icon/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="actionHelpQt">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/logo_qt.png</normaloff>:/actions/icon/logo_qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>О Qt</string>
+   </property>
+  </action>
+  <action name="actionHelpQlocmessege">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/online.png</normaloff>:/actions/icon/online.png</iconset>
+   </property>
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/help.png</normaloff>:/actions/icon/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Помощь</string>
+   </property>
+  </action>
+  <action name="actionDeleteUser">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/delete_user.png</normaloff>:/actions/icon/delete_user.png</iconset>
+   </property>
+   <property name="text">
+    <string>Удалить контакт</string>
+   </property>
+  </action>
+  <action name="actionSendMessage">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/actions/icon/messege.png</normaloff>:/actions/icon/messege.png</iconset>
+   </property>
+   <property name="text">
+    <string>Отправить сообщение</string>
+   </property>
+  </action>
+  <action name="actionSendFile">
+   <property name="icon">
+    <iconset resource="systray.qrc">
+     <normaloff>:/button/icon/send_to_file.png</normaloff>:/button/icon/send_to_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Отправить файл</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="systray.qrc"/>
+ </resources>
+ <connections/>
+</ui>
