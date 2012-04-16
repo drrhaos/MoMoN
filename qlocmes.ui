@@ -30,7 +30,7 @@
       <property name="minimumSize">
        <size>
         <width>150</width>
-        <height>0</height>
+        <height>378</height>
        </size>
       </property>
      </widget>
@@ -43,7 +43,7 @@
      <x>0</x>
      <y>0</y>
      <width>437</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -59,7 +59,7 @@
        <normaloff>:/actions/icon/online.png</normaloff>:/actions/icon/online.png</iconset>
      </property>
      <addaction name="actionOnLine"/>
-     <addaction name="actionOffLIne"/>
+     <addaction name="actionOffLine"/>
     </widget>
     <addaction name="menu"/>
     <addaction name="actionSettings"/>
@@ -93,7 +93,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>250</width>
+     <width>253</width>
      <height>300</height>
     </size>
    </property>
@@ -265,7 +265,7 @@
     <string>В сети</string>
    </property>
   </action>
-  <action name="actionOffLIne">
+  <action name="actionOffLine">
    <property name="checkable">
     <bool>true</bool>
    </property>

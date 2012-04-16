@@ -27,9 +27,9 @@ public:
 
 signals:
 	void signalsDisConnected(QString& strHostName);
-
+	void signalsFileSize(QString fileSize);
 public slots:
-	void slotConnectToHost(const QString& strHost, int nPort,  const QString& ipString);
+	void slotConnectToHost(const QString& tIpHost, int numberPort,  const QString& ipString);
 	void slotConnected();
 	void slotReadyRead();
 	void slotSendToMessage(QString statusName, QString nameUser, QString sendMesseges);
@@ -45,7 +45,7 @@ private:
 private:
 	QTcpSocket *mTcpSocket;
 	QFile *sendFile;
-	QString sHost, ipAdress;
+	QString ipHost, ipAdress;
 
 };
 

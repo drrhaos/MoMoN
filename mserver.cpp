@@ -35,103 +35,162 @@ MServer::MServer(int nPort, QObject * parent)
     connect(mClientSocket, SIGNAL(readyRead()),
             this,          SLOT(slotReadClient()));
 
-    sendToClient(mClientSocket, "Server Response: Connected!");
+    sendToClient(mClientSocket, "SC_OFFICE", "Server Response: Connected!");
 }
 //-------------------------------------------------------------------------------
 void MServer::slotReadClient()
 {
+    QTime   time;
+    QString typePacket, nameUser;
+
     QTcpSocket* mClientSocket = (QTcpSocket*)sender();
     QDataStream in(mClientSocket);
     in.setVersion(QDataStream::Qt_4_7);
 
-    forever
-    {
-        if (!nextBlockSize) {
-            if (mClientSocket->bytesAvailable() < sizeof(quint16)) {
-                break;
-            }
-            in >> nextBlockSize;
-        }
 
-        if (mClientSocket->bytesAvailable() < nextBlockSize) {
-            break;
-        }
-
-        nextBlockSize = 0;
-
-//разбор принятого сообщения
-
-    QTime   time;
-    QString str;
-
-    QString strStatusName, nameUser, nameSurname, name, namePatronymic, namePost,
-    		ipAdress, sendMesseges;
-
-
-    in >> time >> strStatusName;
-/*
-* если статус OnLine тогда считывается информация о пользователе
-* если статус OffLine тогда удаляется пользователь
-* иначе считывается входящее сообщение
-*/
-    if (strStatusName == "OnLine") {
-    	in >> nameUser >> nameSurname >> name >> namePatronymic >> namePost >> ipAdress;
-    	emit signalsNewUser(strStatusName, nameUser,
-    			nameSurname, name, namePatronymic, namePost,
-    			ipAdress);
-    } else if (strStatusName == "OffLine") {
-
-	} else if (strStatusName == "message") {
-    	in >> nameUser >> str;
-    	QString strMessage =
-    	            time.toString() + " " + str;
-    	emit signalsNewEntering(nameUser, str);
-//запись в историю
-    	QTime realTime;
-
-    	QString messeg = "<table width=100% bgcolor=#b4fff0><tr><td align=left><b><font color=red>" +
-    			nameUser +
-    			"</font></b></td><td align=right><div align=right><font color=gray>" +
-    			realTime.currentTime().toString() +
-    			"</font></div></td></tr></table>" +
-    			str;
-    	QString home = QDir::homePath() + "/.qlocmes";
-    	QDir(home).mkdir(home);
-    	QFile fileHistory(home + "/" + nameUser +".txt");
-    	if (!fileHistory.open(QIODevice::Append | QIODevice::Text))
+    if (!nextBlockSize) {
+    	if (quint16(mClientSocket->bytesAvailable()) < sizeof(quint16)) {
     		return;
-    	fileHistory.write(messeg.toUtf8());
-
-    	fileHistory.close();
-	} else if (strStatusName == "file"){
-		QByteArray buffer;
-		QString fileName;
-		QString dirDownloads = QDir::homePath() + "/Downloads/";
-		QDir(dirDownloads).mkdir(dirDownloads);
-
-		in >> nameUser >> fileName >> buffer;
-
-		QFile receiveFile(dirDownloads + fileName);
-		receiveFile.open(QIODevice::ReadWrite);
-
-		QMessageBox::about(0, "Message", "Server = " + QString::number(buffer.size()));
-
-
-		receiveFile.write(buffer);
-		receiveFile.close();
-	}
-    sendToClient(mClientSocket,
-                 "Server Response: Received \"" + str + "\"");
-
+    	}
+    	in >> nextBlockSize;
     }
+
+    if (mClientSocket->bytesAvailable() < nextBlockSize) {
+    	return;
+    }
+
+    in >> time >> typePacket >> nameUser;
+
+   	if (typePacket == "CS_CONNECT") {
+   		csConnect(nameUser);
+   	} else if (typePacket == "CS_MESSAGE") {
+   		csNewMessage(nameUser);
+   	} else if (typePacket == "CS_STATUS") {
+
+   	} else if (typePacket == "CS_MODIFY_CONTACT") {
+
+   	} else if (typePacket == "CS_USER_INFO") {
+
+   	} else if (typePacket == "CS_FILE_TRANSFER") {
+   		csFileTransfer(nameUser);
+   	} else {
+
+   	}
+    nextBlockSize = 0;
+}
+//---------------------------------------------------------------------
+void MServer::csConnect(QString nameUser)
+{
+    QString nameSurname, name, namePatronymic, namePost,
+    		ipAdress, sendMesseges;
+    QString strStatusName = "OnLine";
+
+	QTcpSocket* mClientSocket = (QTcpSocket*)sender();
+    QDataStream in(mClientSocket);
+    in.setVersion(QDataStream::Qt_4_7);
+
+    in >> nameSurname >> name >> namePatronymic >> namePost >> ipAdress;
+
+    emit signalsNewUser(strStatusName, nameUser,
+    		nameSurname, name, namePatronymic, namePost,
+    		ipAdress);
+}
+//---------------------------------------------------------------------
+void MServer::csNewMessage(QString nameUser)
+{
+    QString enteringMessage;
+    QTime   time;
+
+	QTcpSocket* mClientSocket = (QTcpSocket*)sender();
+    QDataStream in(mClientSocket);
+    in.setVersion(QDataStream::Qt_4_7);
+
+
+	in >> enteringMessage;
+	QString fullMessage = time.toString() + " " + enteringMessage;
+	emit signalsNewEntering(nameUser, enteringMessage);
+
+//запись в историю
+	QTime realTime;
+
+	QString messag = "<table width=100% bgcolor=#b4fff0><tr><td align=left><b><font color=red>" +
+			nameUser +
+			"</font></b></td><td align=right><div align=right><font color=gray>" +
+			realTime.currentTime().toString() +
+			"</font></div></td></tr></table>" +
+			enteringMessage;
+	QString home = QDir::homePath() + "/.qlocmes";
+	QDir(home).mkdir(home);
+	QFile fileHistory(home + "/" + nameUser +".txt");
+	if (!fileHistory.open(QIODevice::Append | QIODevice::Text))
+		return;
+	fileHistory.write(messag.toUtf8());
+	fileHistory.close();
+
+
+}
+//---------------------------------------------------------------------
+void MServer::csFileTransfer(QString nameUser)
+{
+	QTcpSocket* mClientSocket = (QTcpSocket*)sender();
+    QDataStream in(mClientSocket);
+    in.setVersion(QDataStream::Qt_4_7);
+
+	QByteArray buffer;
+	QString fileName;
+	qint64 fileSize;
+
+	QString dirDownloads = QDir::homePath() + "/Downloads/";
+	QDir(dirDownloads).mkdir(dirDownloads);
+
+	in >> fileName >> fileSize;
+
+	QMessageBox messageBox;
+	messageBox.setInformativeText(QObject::trUtf8("Принять файл ") + fileName +
+			QObject::trUtf8(" от ") + nameUser + "?");
+	messageBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+	int ret = messageBox.exec();
+
+	if (ret == QMessageBox::Save) {
+
+		forever
+	    {
+	        if (!nextBlockSize) {
+
+	            if (quint16(mClientSocket->bytesAvailable()) < sizeof(quint16)) {
+	                break;
+	            }
+	            in >> nextBlockSize;
+	        }
+
+	        in >> buffer;
+
+	        sendToClient(mClientSocket, "SC_FILE_TRANSFER_ASK", fileName);
+
+	        if (mClientSocket->bytesAvailable() < nextBlockSize) {
+	            break;
+	        }
+	    }
+
+	    QFile receiveFile(dirDownloads + fileName);
+	    receiveFile.open(QIODevice::ReadWrite);
+	    receiveFile.write(buffer);
+	    receiveFile.close();
+	    buffer.clear();
+	} else {
+
+
+	}
+	nextBlockSize = 0;
 }
 // ----------------------------------------------------------------------
-void MServer::sendToClient(QTcpSocket* mSocket, const QString& str)
+void MServer::sendToClient(QTcpSocket* mSocket, const QString& typePacket, QString report)
 {
     QByteArray  arrBlock;
     QDataStream out(&arrBlock, QIODevice::WriteOnly);
+
     out.setVersion(QDataStream::Qt_4_7);
-    out << quint16(0) << QTime::currentTime() << str;
+    out << quint16(0) << QTime::currentTime() << typePacket << report;
 
     out.device()->seek(0);
     out << quint16(arrBlock.size() - sizeof(quint16));

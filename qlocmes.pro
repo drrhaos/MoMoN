@@ -5,8 +5,9 @@ QT += core \
     sql \
     network \
     phonon
-    
-HEADERS += mtcpsocket.h \
+HEADERS += mudpclient.h \
+    mudpserver.h \
+    mtcpsocket.h \
     mpopupmessage.h \
     MSqlTableModel.h \
     MSqlRelationalDelegate.h \
@@ -18,7 +19,9 @@ HEADERS += mtcpsocket.h \
     mtabwidgets.h \
     mtextedit.h \
     qlocmes.h
-SOURCES += mtcpsocket.cpp \
+SOURCES += mudpclient.cpp \
+    mudpserver.cpp \
+    mtcpsocket.cpp \
     mpopupmessage.cpp \
     MSqlTableModel.cpp \
     MSqlRelationalDelegate.cpp \

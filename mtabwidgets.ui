@@ -232,6 +232,17 @@ p, li { white-space: pre-wrap; }
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonClearHistory">
+          <property name="text">
+           <string extracomment="Очистить историю переписки с пользователем."/>
+          </property>
+          <property name="icon">
+           <iconset resource="systray.qrc">
+            <normaloff>:/button/icon/clear.png</normaloff>:/button/icon/clear.png</iconset>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

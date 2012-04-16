@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'qlocmes.ui'
 **
-** Created: Mon 19. Mar 11:14:46 2012
+** Created: Mon 16. Apr 21:58:55 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,7 +36,7 @@ class Ui_qlocmes
 {
 public:
     QAction *actionOnLine;
-    QAction *actionOffLIne;
+    QAction *actionOffLine;
     QAction *actionSettings;
     QAction *actionQuit;
     QAction *actionHelpQt;
@@ -88,13 +88,13 @@ public:
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/actions/icon/online.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionOnLine->setIcon(icon1);
-        actionOffLIne = new QAction(qlocmes);
-        actionOffLIne->setObjectName(QString::fromUtf8("actionOffLIne"));
-        actionOffLIne->setCheckable(true);
-        actionOffLIne->setChecked(true);
+        actionOffLine = new QAction(qlocmes);
+        actionOffLine->setObjectName(QString::fromUtf8("actionOffLine"));
+        actionOffLine->setCheckable(true);
+        actionOffLine->setChecked(true);
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/actions/icon/offline.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionOffLIne->setIcon(icon2);
+        actionOffLine->setIcon(icon2);
         actionSettings = new QAction(qlocmes);
         actionSettings->setObjectName(QString::fromUtf8("actionSettings"));
         QIcon icon3;
@@ -140,14 +140,14 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         treeView = new QTreeView(centralwidget);
         treeView->setObjectName(QString::fromUtf8("treeView"));
-        treeView->setMinimumSize(QSize(150, 0));
+        treeView->setMinimumSize(QSize(150, 378));
 
         horizontalLayout->addWidget(treeView);
 
         qlocmes->setCentralWidget(centralwidget);
         menubar = new QMenuBar(qlocmes);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 437, 21));
+        menubar->setGeometry(QRect(0, 0, 437, 25));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menu = new QMenu(menuFile);
@@ -165,7 +165,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(dockWidgetData->sizePolicy().hasHeightForWidth());
         dockWidgetData->setSizePolicy(sizePolicy);
-        dockWidgetData->setMinimumSize(QSize(250, 300));
+        dockWidgetData->setMinimumSize(QSize(253, 300));
         dockWidgetData->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
         dockWidgetData->setAllowedAreas(Qt::AllDockWidgetAreas);
         dockWidgetContents_3 = new QWidget();
@@ -274,7 +274,7 @@ public:
         menuFile->addSeparator();
         menuFile->addAction(actionQuit);
         menu->addAction(actionOnLine);
-        menu->addAction(actionOffLIne);
+        menu->addAction(actionOffLine);
         menuHelp->addAction(actionHelpQt);
         menuHelp->addAction(actionHelpQlocmessege);
         menuHelp->addSeparator();
@@ -288,7 +288,7 @@ public:
     void retranslateUi(QMainWindow *qlocmes)
     {
         actionOnLine->setText(QApplication::translate("qlocmes", "\320\222 \321\201\320\265\321\202\320\270", 0, QApplication::UnicodeUTF8));
-        actionOffLIne->setText(QApplication::translate("qlocmes", "\320\235\320\265 \320\262 \321\201\320\265\321\202\320\270", 0, QApplication::UnicodeUTF8));
+        actionOffLine->setText(QApplication::translate("qlocmes", "\320\235\320\265 \320\262 \321\201\320\265\321\202\320\270", 0, QApplication::UnicodeUTF8));
         actionSettings->setText(QApplication::translate("qlocmes", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", 0, QApplication::UnicodeUTF8));
         actionQuit->setText(QApplication::translate("qlocmes", "\320\222\321\213\321\205\320\276\320\264", 0, QApplication::UnicodeUTF8));
         actionHelpQt->setText(QApplication::translate("qlocmes", "\320\236 Qt", 0, QApplication::UnicodeUTF8));

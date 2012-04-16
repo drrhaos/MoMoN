@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'msettings.ui'
 **
-** Created: Mon 19. Mar 11:14:46 2012
+** Created: Mon 16. Apr 23:23:02 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -100,8 +100,9 @@ public:
     QHBoxLayout *horizontalLayout_7;
     QLabel *labelNumberPort;
     QSpinBox *spinBoxNumberPort;
-    QLabel *labelAdresServer;
-    QLineEdit *lineEditAdresServer;
+    QLabel *labelInquiryStatus;
+    QSpinBox *spinBoxInquiryStatus;
+    QLabel *labelInquiryStatusSec;
     QFrame *line_2;
     QHBoxLayout *horizontalLayout_13;
     QVBoxLayout *verticalLayout_5;
@@ -494,17 +495,29 @@ public:
 
         horizontalLayout_7->addWidget(spinBoxNumberPort);
 
-        labelAdresServer = new QLabel(page_3);
-        labelAdresServer->setObjectName(QString::fromUtf8("labelAdresServer"));
-        labelAdresServer->setEnabled(false);
+        labelInquiryStatus = new QLabel(page_3);
+        labelInquiryStatus->setObjectName(QString::fromUtf8("labelInquiryStatus"));
+        labelInquiryStatus->setEnabled(true);
 
-        horizontalLayout_7->addWidget(labelAdresServer);
+        horizontalLayout_7->addWidget(labelInquiryStatus);
 
-        lineEditAdresServer = new QLineEdit(page_3);
-        lineEditAdresServer->setObjectName(QString::fromUtf8("lineEditAdresServer"));
-        lineEditAdresServer->setEnabled(false);
+        spinBoxInquiryStatus = new QSpinBox(page_3);
+        spinBoxInquiryStatus->setObjectName(QString::fromUtf8("spinBoxInquiryStatus"));
+        spinBoxInquiryStatus->setMinimum(30);
+        spinBoxInquiryStatus->setMaximum(99999);
+        spinBoxInquiryStatus->setValue(3600);
 
-        horizontalLayout_7->addWidget(lineEditAdresServer);
+        horizontalLayout_7->addWidget(spinBoxInquiryStatus);
+
+        labelInquiryStatusSec = new QLabel(page_3);
+        labelInquiryStatusSec->setObjectName(QString::fromUtf8("labelInquiryStatusSec"));
+        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(labelInquiryStatusSec->sizePolicy().hasHeightForWidth());
+        labelInquiryStatusSec->setSizePolicy(sizePolicy4);
+
+        horizontalLayout_7->addWidget(labelInquiryStatusSec);
 
 
         verticalLayout_8->addLayout(horizontalLayout_7);
@@ -550,26 +563,26 @@ public:
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         pushButtonAddMyIp = new QPushButton(page_3);
         pushButtonAddMyIp->setObjectName(QString::fromUtf8("pushButtonAddMyIp"));
-        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Maximum);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(pushButtonAddMyIp->sizePolicy().hasHeightForWidth());
-        pushButtonAddMyIp->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Maximum);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(pushButtonAddMyIp->sizePolicy().hasHeightForWidth());
+        pushButtonAddMyIp->setSizePolicy(sizePolicy5);
         pushButtonAddMyIp->setMaximumSize(QSize(23, 16777215));
 
         horizontalLayout_8->addWidget(pushButtonAddMyIp);
 
         pushButtonEditMyIp = new QPushButton(page_3);
         pushButtonEditMyIp->setObjectName(QString::fromUtf8("pushButtonEditMyIp"));
-        sizePolicy4.setHeightForWidth(pushButtonEditMyIp->sizePolicy().hasHeightForWidth());
-        pushButtonEditMyIp->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(pushButtonEditMyIp->sizePolicy().hasHeightForWidth());
+        pushButtonEditMyIp->setSizePolicy(sizePolicy5);
 
         horizontalLayout_8->addWidget(pushButtonEditMyIp);
 
         pushButtonDeleteMyIp = new QPushButton(page_3);
         pushButtonDeleteMyIp->setObjectName(QString::fromUtf8("pushButtonDeleteMyIp"));
-        sizePolicy4.setHeightForWidth(pushButtonDeleteMyIp->sizePolicy().hasHeightForWidth());
-        pushButtonDeleteMyIp->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(pushButtonDeleteMyIp->sizePolicy().hasHeightForWidth());
+        pushButtonDeleteMyIp->setSizePolicy(sizePolicy5);
         pushButtonDeleteMyIp->setMaximumSize(QSize(23, 16777215));
 
         horizontalLayout_8->addWidget(pushButtonDeleteMyIp);
@@ -592,6 +605,8 @@ public:
 
         tableViewMyIp = new QTableView(page_3);
         tableViewMyIp->setObjectName(QString::fromUtf8("tableViewMyIp"));
+        tableViewMyIp->setShowGrid(false);
+        tableViewMyIp->verticalHeader()->setDefaultSectionSize(19);
 
         horizontalLayout_13->addWidget(tableViewMyIp);
 
@@ -670,8 +685,8 @@ public:
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         pushButtonAddAdress = new QPushButton(frame);
         pushButtonAddAdress->setObjectName(QString::fromUtf8("pushButtonAddAdress"));
-        sizePolicy4.setHeightForWidth(pushButtonAddAdress->sizePolicy().hasHeightForWidth());
-        pushButtonAddAdress->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(pushButtonAddAdress->sizePolicy().hasHeightForWidth());
+        pushButtonAddAdress->setSizePolicy(sizePolicy5);
         pushButtonAddAdress->setMinimumSize(QSize(23, 0));
         pushButtonAddAdress->setMaximumSize(QSize(23, 16777215));
 
@@ -679,15 +694,15 @@ public:
 
         pushButtonEditAress = new QPushButton(frame);
         pushButtonEditAress->setObjectName(QString::fromUtf8("pushButtonEditAress"));
-        sizePolicy4.setHeightForWidth(pushButtonEditAress->sizePolicy().hasHeightForWidth());
-        pushButtonEditAress->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(pushButtonEditAress->sizePolicy().hasHeightForWidth());
+        pushButtonEditAress->setSizePolicy(sizePolicy5);
 
         horizontalLayout_5->addWidget(pushButtonEditAress);
 
         pushButtonDelAdress = new QPushButton(frame);
         pushButtonDelAdress->setObjectName(QString::fromUtf8("pushButtonDelAdress"));
-        sizePolicy4.setHeightForWidth(pushButtonDelAdress->sizePolicy().hasHeightForWidth());
-        pushButtonDelAdress->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(pushButtonDelAdress->sizePolicy().hasHeightForWidth());
+        pushButtonDelAdress->setSizePolicy(sizePolicy5);
         pushButtonDelAdress->setMinimumSize(QSize(23, 0));
         pushButtonDelAdress->setMaximumSize(QSize(23, 16777215));
 
@@ -729,7 +744,7 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         checkBoxExpert = new QCheckBox(MSettingsClass);
         checkBoxExpert->setObjectName(QString::fromUtf8("checkBoxExpert"));
-        checkBoxExpert->setEnabled(true);
+        checkBoxExpert->setEnabled(false);
 
         horizontalLayout->addWidget(checkBoxExpert);
 
@@ -793,13 +808,12 @@ public:
         QWidget::setTabOrder(lineEditPathSounds, tableViewNetFilter);
         QWidget::setTabOrder(tableViewNetFilter, checkBoxExpert);
         QWidget::setTabOrder(checkBoxExpert, tableViewMyIp);
-        QWidget::setTabOrder(tableViewMyIp, lineEditAdresServer);
 
         retranslateUi(MSettingsClass);
         QObject::connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
         QObject::connect(checkBoxExpert, SIGNAL(clicked(bool)), frame, SLOT(setVisible(bool)));
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MSettingsClass);
@@ -858,7 +872,8 @@ public:
         checkBoxNewMessageCloseForm->setText(QApplication::translate("MSettingsClass", "\320\222\321\205\320\276\320\264\321\217\321\211\320\265\320\265 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265 (\320\276\320\272\320\275\320\276 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\271 \320\267\320\260\320\272\321\200\321\213\321\202\320\276)", 0, QApplication::UnicodeUTF8));
         checkBoxNewMessageOpenForm->setText(QApplication::translate("MSettingsClass", "\320\222\321\205\320\276\320\264\321\217\321\211\320\265\320\265 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265 (\320\276\320\272\320\275\320\276 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\271 \320\276\321\202\320\272\321\200\321\213\321\202\320\276)", 0, QApplication::UnicodeUTF8));
         labelNumberPort->setText(QApplication::translate("MSettingsClass", "\320\235\320\276\320\274\320\265\321\200 \320\277\320\276\321\200\321\202\320\260", 0, QApplication::UnicodeUTF8));
-        labelAdresServer->setText(QApplication::translate("MSettingsClass", "\320\220\320\264\321\200\320\265\321\201 \321\201\320\265\321\200\320\262\320\265\321\200\320\260", 0, QApplication::UnicodeUTF8));
+        labelInquiryStatus->setText(QApplication::translate("MSettingsClass", "\320\227\320\260\320\277\321\200\320\276\321\201 \321\201\321\202\320\260\321\202\321\203\321\201\320\260 \320\272\320\260\320\266\320\264\321\213\320\265", 0, QApplication::UnicodeUTF8));
+        labelInquiryStatusSec->setText(QApplication::translate("MSettingsClass", "\321\201\320\265\320\272.", 0, QApplication::UnicodeUTF8));
         labelMyIp->setText(QApplication::translate("MSettingsClass", "\320\241\320\262\320\276\320\271 \320\260\320\264\321\200\320\265\321\201", 0, QApplication::UnicodeUTF8));
         checkBoxMyIp->setText(QApplication::translate("MSettingsClass", "\320\230\321\201\320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\321\214", 0, QApplication::UnicodeUTF8));
         lineEditMyIp->setInputMask(QApplication::translate("MSettingsClass", "000.000.000.000; ", 0, QApplication::UnicodeUTF8));

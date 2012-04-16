@@ -7,7 +7,6 @@
 #include "mclient.h"
 #include "msettings.h"
 
-
 //----------------------------------------------------------------------------------
 MClient::MClient(QObject * parent)
 	:QObject(parent), nextBlockSize(0)
@@ -15,13 +14,13 @@ MClient::MClient(QObject * parent)
 
 }
 //----------------------------------------------------------------------------------
-void MClient::slotConnectToHost(const QString& strHost, int nPort, const QString& ipString)
+void MClient::slotConnectToHost(const QString& tIpHost, int numberPort, const QString& ipString)
 {
-	sHost = strHost;
+	ipHost = tIpHost;
 	ipAdress = ipString;
 
 	mTcpSocket = new QTcpSocket(this);
-	mTcpSocket->connectToHost(strHost, nPort);
+	mTcpSocket->connectToHost(ipHost, numberPort);
 
 	connect(mTcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
 	connect(mTcpSocket, SIGNAL(readyRead()), this,  SLOT(slotReadyRead()));
@@ -38,7 +37,7 @@ void MClient::slotConnected()
     QSettings mSettings("DrHaos", "qlocmes");
 
     out.setVersion(QDataStream::Qt_4_7);
-    out << quint16(0) << QTime::currentTime() << QObject::trUtf8("OnLine")
+    out << quint16(0) << QTime::currentTime() << QObject::trUtf8("CS_CONNECT")
     		<< mSettings.value("Name User", "").toString()
     		<< mSettings.value("Surname", "").toString()
     		<< mSettings.value("Name", "").toString()
@@ -71,7 +70,7 @@ void MClient::slotReadyRead()
     forever
     {
         if (!nextBlockSize) {
-            if (mTcpSocket->bytesAvailable() < sizeof(quint16)) {
+            if (quint16(mTcpSocket->bytesAvailable()) < sizeof(quint16)) {
                 break;
             }
             in >> nextBlockSize;
@@ -82,20 +81,28 @@ void MClient::slotReadyRead()
         }
 
         QTime   time;
-        QString str;
-        in >> time >> str;
+        QString typePacket, messageInfo;
+        in >> time >> typePacket >> messageInfo;
 
+        if (typePacket == "SC_CONNECT_ACK") {
 
+       	} else if (typePacket == "SC_MESSAGE_ASK") {
+
+       	} else if (typePacket == "SC_USER_INFO_ASK") {
+
+       	} else if (typePacket == "SC_FILE_TRANSFER_ASK") {
+
+        } else if (typePacket == "SC_OFFICE") {
 //запись в log файл
-        QString home = QDir::homePath() + "/.qlocmes";
-      	QDir(home).mkdir(home);
+        	QString home = QDir::homePath() + "/.qlocmes";
+        	QDir(home).mkdir(home);
 
-    	QFile fileLog(home +"/client.log");
-    	if (!fileLog.open(QIODevice::Append | QIODevice::Text))
-    		return;
-    	fileLog.write((time.toString() + " " + str + "\n").toAscii());
-    	fileLog.close();
-
+        	QFile fileLog(home +"/client.log");
+        	if (!fileLog.open(QIODevice::Append | QIODevice::Text))
+        		return;
+        	fileLog.write((time.toString() + " " + messageInfo + "\n").toAscii());
+        	fileLog.close();
+        }
         nextBlockSize = 0;
     }
 }
@@ -116,12 +123,12 @@ void MClient::slotError(QAbstractSocket::SocketError err)
 	QFile fileLog(home +"/client.log");
 	if (!fileLog.open(QIODevice::Append | QIODevice::Text))
 		return;
-	fileLog.write((strError + " " + sHost + "\n").toAscii());
+	fileLog.write((strError + " " + ipHost + "\n").toAscii());
 	fileLog.close();
 
 //в случае отключения от сервера посылается сигнал об скрытии контакта
 	if (err == QAbstractSocket::RemoteHostClosedError)
-		emit signalsDisConnected(sHost);
+		emit signalsDisConnected(ipHost);
 
 //вывод ошибок подключения
 //	if ((err == QAbstractSocket::SocketTimeoutError)||(err == QAbstractSocket::ConnectionRefusedError)) {
@@ -133,6 +140,7 @@ void MClient::slotSendToMessage(QString statusName, QString nameUser, QString se
 {
     QByteArray  arrBlock;
     QDataStream out(&arrBlock, QIODevice::WriteOnly);
+
     out.setVersion(QDataStream::Qt_4_7);
     out << quint16(0) << QTime::currentTime() << statusName << nameUser << sendMesseges;
 
@@ -145,24 +153,25 @@ void MClient::slotSendToMessage(QString statusName, QString nameUser, QString se
 void MClient::slotSendToFile(QString filePatch, QString nameUser)
 {
 	QByteArray  arrBlock;
+	qint64 fileSize;
 	QDataStream out(&arrBlock, QIODevice::WriteOnly);
 	out.setVersion(QDataStream::Qt_4_7);
 
 	sendFile = new QFile(filePatch);
 	sendFile->open(QFile::ReadOnly);
+
 	QFileInfo fi(filePatch);
 	QString fileName = fi.fileName();
 
+	fileSize = fi.size();
 
 	QByteArray buffer = sendFile->readAll();
 
-	out << quint16(0) << QTime::currentTime() << QString("file") << nameUser
-			<< fileName << buffer;
+	out << quint16(0) << QTime::currentTime() << QString("CS_FILE_TRANSFER") << nameUser
+			<< fileName << fileSize << buffer;
 
 	out.device()->seek(0);
 	out << quint16(arrBlock.size() - sizeof(quint16));
-
-	QMessageBox::about(0, "Message", "Client = " + QString::number(buffer.size()));
 
     mTcpSocket->write(arrBlock);
 }

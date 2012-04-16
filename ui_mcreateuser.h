@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mcreateuser.ui'
 **
-** Created: Mon 19. Mar 11:14:46 2012
+** Created: Mon 16. Apr 21:58:55 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

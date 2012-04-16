@@ -36,7 +36,11 @@ private:
     quint16 nextBlockSize;
 
 private:
-    void sendToClient(QTcpSocket* mSocket, const QString& str);//сервер
+    void sendToClient(QTcpSocket* mSocket, const QString& typePacket, QString report);//сервер
+    void csConnect(QString nameUser);
+    void csNewMessage(QString nameUser);
+    void csFileTransfer(QString nameUser);
+
 };
 
 

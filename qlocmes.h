@@ -22,6 +22,8 @@ class MSettings;
 class QDataWidgetMapper;
 class QMenu;
 class QPalette;
+class MUdpServer;
+class MUdpClient;
 
 enum{
 	id = 0,
@@ -121,6 +123,8 @@ private:
     QString playNewMessage, playSendMessage,
         		playNewUser, playCloseUser;
 
+    MUdpServer *myUdpServer;
+    MUdpClient *myUdpClient;
 private:
 	QString returnsIpThirdPoint(QString ipAdress);
 	virtual void createNewMClient(QString& ipAdressHost,

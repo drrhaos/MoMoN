@@ -5,7 +5,6 @@
 #include "qlocmes.h"
 #include "mcreateuser.h"
 
-
 //---------------------------------------------------------------------------
 bool createConnection(QString fileName)
 {
@@ -18,7 +17,9 @@ bool createConnection(QString fileName)
 	}
 	return true;
 }
+
 //---------------------------------------------------------------------------
+
 void createFakeData()
 {
     QProgressDialog progress;

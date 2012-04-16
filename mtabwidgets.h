@@ -28,6 +28,7 @@ public slots:
 	void slotSetBoldText(bool index);
 	void slotSetItalicText(bool index);
 	void slotSetUnderlineText(bool index);
+	void slotClearHistory();
 
 private:
     MSettings *mainSettings;

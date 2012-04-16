@@ -10,7 +10,7 @@ MTabWidgets::MTabWidgets(QString& userNameTemp, MServer * mainServerTemp,
 
 	QStringList colorNames;
 	strHost = ipClient;
-    colorNames = QColor::colorNames();   //Если нужны ВСЕ цвета, присутствущие в системе, разремируем данную строчку и ремируем следующую. Иначе, используем только те цвета, которые указаны строчкой ниже
+    colorNames = QColor::colorNames();   //Если нужны не ВСЕ цвета, присутствущие в системе, разремируем данную строчку и ремируем следующую. Иначе, используем только те цвета, которые указаны строчкой ниже
     //colorNames <<"darkGreen"<<"green"<<"gray"<<"red"<<"white"<<"blue"<<"cyan"<<"darkMagenta"<<"yellow"<<"darkRed"<<"black"<<"magenta";
 
     comboBoxColor->setFocusPolicy(Qt::NoFocus);
@@ -57,11 +57,13 @@ MTabWidgets::MTabWidgets(QString& userNameTemp, MServer * mainServerTemp,
 	connect(comboBoxFont, SIGNAL(currentIndexChanged(const QString &)),
 			this, SLOT(slotSetFontText(const QString &)));
 	connect(pushButtonBold, SIGNAL(toggled(bool )),
-				this, SLOT(slotSetBoldText(bool )));
+			this, SLOT(slotSetBoldText(bool )));
 	connect(pushButtonItalic, SIGNAL(toggled(bool )),
-					this, SLOT(slotSetItalicText(bool )));
+			this, SLOT(slotSetItalicText(bool )));
 	connect(pushButtonUnderline, SIGNAL(toggled(bool )),
-					this, SLOT(slotSetUnderlineText(bool )));
+			this, SLOT(slotSetUnderlineText(bool )));
+	connect(pushButtonClearHistory, SIGNAL(clicked()), this, SLOT(slotClearHistory()));
+
 	textEditEntering->verticalScrollBar()->setValue(textEditEntering->verticalScrollBar()->maximum());
 }
 //----------------------------------------------------------------------------------------
@@ -76,7 +78,7 @@ void MTabWidgets::slotSendMesseges()
 				"</font></div></td></tr></table>" +
 				textEditOutgoing->toHtml();
 
-		mainClient->slotSendToMessage("message", mSettings->value("Name User", "").toString() ,
+		mainClient->slotSendToMessage("CS_MESSAGE", mSettings->value("Name User", "").toString() ,
 				textEditOutgoing->toHtml());
 		textEditEntering->append(messag);
 
@@ -135,6 +137,10 @@ bool MTabWidgets::slotSendToFile()
 
 	textEditEntering->append(QObject::trUtf8("<b><font color=blue>Файл: </b></font>")
 							 + fileName + QObject::trUtf8("<b><font color=blue> отправлен.</b></font>"));
+
+	QFileInfo fi(fileName);
+	progressBarSendToFile->setMaximum(fi.size());
+
 	frame->setVisible(false);
 	return true;
 }
@@ -181,6 +187,20 @@ void MTabWidgets::slotSetUnderlineText(bool index)
 	textCharFormat.setFontUnderline(index);
 	textEditOutgoing->setCurrentCharFormat(textCharFormat);
 	textEditOutgoing->setFocus();
+}
+//---------------------------------------------------------------------------------------
+void MTabWidgets::slotClearHistory()
+{
+	textEditEntering->clear();
+
+	QString home = QDir::homePath() + "/.qlocmes";
+   	QDir(home).mkdir(home);
+   	QFile fileHistory(home + "/" + userName +".txt");
+   	if (!fileHistory.open(QIODevice::Append | QIODevice::Text))
+   		return;
+   	fileHistory.remove();
+
+   	fileHistory.close();
 }
 //---------------------------------------------------------------------------------------
 MTabWidgets::~MTabWidgets()

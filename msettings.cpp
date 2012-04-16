@@ -52,7 +52,7 @@ void MSettings::setSettigs()
 
 //сетевые настройки
 	mSetting.setValue("Number Port", spinBoxNumberPort->value());
-	mSetting.setValue("Adres Server", lineEditAdresServer->text());
+	mSetting.setValue("Inquiry Status", spinBoxInquiryStatus->value());
 }
 //--------------------------------------------------------------------------
 void MSettings::readSettings()
@@ -85,7 +85,7 @@ void MSettings::readSettings()
 
 //сетевые настройки
 	spinBoxNumberPort->setValue((mSetting.value("Number Port", spinBoxNumberPort->value())).toInt());
-	lineEditAdresServer->setText((mSetting.value("Adres Server", lineEditAdresServer->text())).toString());
+	spinBoxInquiryStatus->setValue((mSetting.value("Inquiry Status", spinBoxInquiryStatus->value())).toInt());
 }
 
 

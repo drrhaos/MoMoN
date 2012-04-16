@@ -6,7 +6,8 @@ MPopupMessage::MPopupMessage(QWidget *parent)
 		: QWidget(parent, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint)
 {
 	setupUi(this);
-	QLinearGradient gradient(0, 0, 0, height());
+	//скайп
+/*	QLinearGradient gradient(0, 0, 0, height());
     gradient.setColorAt(0.0, QColor::fromRgb(21, 126, 225));
     gradient.setColorAt(0.1, QColor::fromRgb(56, 132, 236));
     gradient.setColorAt(0.2, QColor::fromRgb(56, 132, 236));
@@ -15,6 +16,18 @@ MPopupMessage::MPopupMessage(QWidget *parent)
     QPalette m;
     m.setBrush(QPalette::Window, gradient);
     setPalette(m);
+*/
+	//iphone
+	QLinearGradient gradient(0, 0, 0, height());
+    gradient.setColorAt(0.0, QColor::fromRgb(146, 152, 170));
+    gradient.setColorAt(0.1, QColor::fromRgb(101, 111, 138));
+    gradient.setColorAt(0.2, QColor::fromRgb(94, 105, 133));
+    gradient.setColorAt(0.3, QColor::fromRgb(45, 60, 100));
+    gradient.setColorAt(1, QColor::fromRgb(32, 47, 87));
+    QPalette m;
+    m.setBrush(QPalette::Window, gradient);
+    setPalette(m);
+
 
     popupTimer = new QTimer(this);
     popupTimer->start(10000);

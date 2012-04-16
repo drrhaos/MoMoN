@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mtabwidgets.ui'
 **
-** Created: Mon 19. Mar 11:14:45 2012
+** Created: Mon 16. Apr 21:58:54 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -49,6 +49,7 @@ public:
     QPushButton *pushButtonItalic;
     QPushButton *pushButtonUnderline;
     QSpacerItem *horizontalSpacer;
+    QPushButton *pushButtonClearHistory;
     MTextEdit *textEditOutgoing;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *pushButtonSendToFile;
@@ -176,6 +177,14 @@ public:
 
         horizontalLayout_4->addItem(horizontalSpacer);
 
+        pushButtonClearHistory = new QPushButton(frame_2);
+        pushButtonClearHistory->setObjectName(QString::fromUtf8("pushButtonClearHistory"));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/button/icon/clear.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonClearHistory->setIcon(icon3);
+
+        horizontalLayout_4->addWidget(pushButtonClearHistory);
+
 
         verticalLayout->addWidget(frame_2);
 
@@ -197,18 +206,18 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         pushButtonSendToFile = new QPushButton(MTabWidgetsClass);
         pushButtonSendToFile->setObjectName(QString::fromUtf8("pushButtonSendToFile"));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/button/icon/send_to_file.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButtonSendToFile->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/button/icon/send_to_file.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonSendToFile->setIcon(icon4);
 
         horizontalLayout_2->addWidget(pushButtonSendToFile);
 
         pushButtonSmile = new QPushButton(MTabWidgetsClass);
         pushButtonSmile->setObjectName(QString::fromUtf8("pushButtonSmile"));
         pushButtonSmile->setContextMenuPolicy(Qt::CustomContextMenu);
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/button/icon/smile.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButtonSmile->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/button/icon/smile.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonSmile->setIcon(icon5);
 
         horizontalLayout_2->addWidget(pushButtonSmile);
 
@@ -247,6 +256,7 @@ public:
         pushButtonBold->setText(QString());
         pushButtonItalic->setText(QString());
         pushButtonUnderline->setText(QString());
+        pushButtonClearHistory->setText(QString());
         pushButtonSendToFile->setText(QString());
         pushButtonSmile->setText(QString());
         pushButtonSend->setText(QApplication::translate("MTabWidgetsClass", "\320\236\321\202\320\277\321\200\320\260\320\262\320\270\321\202\321\214", 0, QApplication::UnicodeUTF8));

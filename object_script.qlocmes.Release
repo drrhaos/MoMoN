@@ -1,4 +1,6 @@
 INPUT(
+./release\mudpclient.o
+./release\mudpserver.o
 ./release\mtcpsocket.o
 ./release\mpopupmessage.o
 ./release\MSqlTableModel.o
@@ -12,6 +14,8 @@ INPUT(
 ./release\mtextedit.o
 ./release\main.o
 ./release\qlocmes.o
+./release\moc_mudpclient.o
+./release\moc_mudpserver.o
 ./release\moc_mtcpsocket.o
 ./release\moc_mpopupmessage.o
 ./release\moc_MSqlTableModel.o

@@ -5,6 +5,8 @@
 #include "msettings.h"
 #include "mpopupmessage.h"
 #include "MSqlRelationalDelegate.h"
+#include "mudpserver.h"
+#include "mudpclient.h"
 
 MFormLocMes::MFormLocMes(QWidget *parent)
     : QMainWindow(parent)
@@ -25,13 +27,18 @@ MFormLocMes::MFormLocMes(QWidget *parent)
 	moveWindowToCenter();
 //выделение памяти под объект класса MServer
 	mainServer = new MServer(setNumberPort);
+//выделение памяти под объект класса MUdpServer
+	myUdpServer = new MUdpServer();
+//выделение памяти под объект класса MUdpClient
+	myUdpClient = new MUdpClient();
+
 //выделение памяти под объект класса MMessage
 	formMesseg = new MMessage();
 //конструктор занчка в трее
     mCreateTray();
 
 //добавление пользователя в список контактов при входящем подключении клиента
-	connect(mainServer,	SIGNAL(signalsNewUser(QString& , QString& ,
+	connect(myUdpClient,	SIGNAL(signalsNewUser(QString& , QString& ,
 								QString& ,QString& , QString& ,	QString& , QString& )),
 			this,		SLOT(addUser(QString& , QString& ,
 							 QString& ,QString& , QString& ,	QString& , QString&)));
@@ -48,13 +55,14 @@ MFormLocMes::MFormLocMes(QWidget *parent)
     connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)),
     		this, 	  SLOT(showContextMenuTreeView(const QPoint &)));
 
+
 /*
  * меню
  */
 //изменить статус на OnLine
 	connect(actionOnLine,      SIGNAL(triggered()), this, SLOT(connectToServer()));
 //изменить статус на OffLine
-	connect(actionOffLIne,     SIGNAL(triggered()), this, SLOT(disconnectToServer()));
+	connect(actionOffLine,     SIGNAL(triggered()), this, SLOT(disconnectToServer()));
 //открытие окна настроек
 	connect(actionSettings,    SIGNAL(triggered()), this, SLOT(showSetting()));
 //закрытие программы
@@ -195,18 +203,18 @@ void MFormLocMes::playSounds(QString fileName)
  * Сканирование области IP адрессов и подключение к
  * другим пользователям в сети
  */
-void MFormLocMes::connectToServer()
+/*void MFormLocMes::connectToServer()
 {
 	actionOnLine->setChecked(TRUE);
 	actionOffLIne->setChecked(FALSE);
 	trayIcon->setIcon(QIcon(":/tray/icon/offline.png"));
-/*
+
  * если в таблице фильтра Ip адресов больше 0 записей
  * разрешающих сканирование, то сканируются толлько эти
  * промежутки адрессов, иначе сканируются весь пулл
  * адресовот 0 до 255 за исключением тех адресов которые
  * запрещены фильтром
- */
+ *
 
 	if (tableModelNetFilter->rowCount()) {
 		QString firstNetAdress, endNetAdress, ipAdress, maskNetAdress;
@@ -283,13 +291,26 @@ void MFormLocMes::connectToServer()
 	}
 
 	n->stop();
+}*/
+void MFormLocMes::connectToServer()
+{
+	n->stop();
+    QSettings mSettings("DrHaos", "qlocmes");
+
+    myUdpServer->sendData(QObject::trUtf8("CS_CONNECT"), QObject::trUtf8("OnLine"),
+    			mSettings.value("Name User", "").toString(), mSettings.value("Surname", "").toString(),
+    			mSettings.value("Name", "").toString(),	mSettings.value("Patronymic", "").toString(),
+    			mSettings.value("Pos", "").toString(), ipAdressString);
+    actionOffLine->setChecked(FALSE);
+    actionOnLine->setChecked(TRUE);
+	trayIcon->setIcon(QIcon(":/tray/icon/online.png"));
 }
 //--------------------------------------------------------------------------------------------
 void MFormLocMes::disconnectToServer()
 {
 //ЛАЖА
 	actionOnLine->setChecked(FALSE);
-	actionOffLIne->setChecked(TRUE);
+	actionOffLine->setChecked(TRUE);
 	trayIcon->setIcon(QIcon(":/tray/icon/offline.png"));
 }
 //----------------------------------------------------------------------
@@ -351,7 +372,7 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 		QString& namePost, QString& ipAdressPullClient)
 {
 	QString myIp, ipAdressPullClientTemp, ipAdressClient, ipAdressClientRemain;
-//выделение из постпивших ip того который находится в той же сети что и пользователь
+//выделение из постпувших ip того который находится в той же сети что и пользователь
 	for (int rowIpAdress = 0; rowIpAdress < tableModelMyIp->rowCount(); ++rowIpAdress) {
 		myIp = tableModelMyIp->data(tableModelMyIp->index(rowIpAdress, 2)).toString();
 
@@ -371,10 +392,6 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 					ipAdressClientRemain = returnsIpThirdPoint(ipAdressClientRemain);
 //если первые части IP равны то записываются данные
 					if (myIp == ipAdressClientRemain) {
-/*						QMessageBox::about(0, "IP", myIp + " = " + ipAdressClientRemain +
-*								QObject::trUtf8("\nIp Клиента = ") + ipAdressClient);
-* !!!!Здесь можно описать сообщение о подключении нового клиента
-*/
 
 //фильтрует список контактов по имени пользователя
 						tableModelContacs->setFilter("basecontacs.nameUser LIKE '"+nameUser+"'");
@@ -390,10 +407,6 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 								(tableModelContacs->data(tableModelContacs->index(row-1, 1)).toString() == "OffLine")) {
 							setTrayIconMessege(nameUser, QObject::trUtf8("В сети"));
 
-							//tableModelContacs->setData(tableModelContacs->index(row-1, 7), ipAdressClient);
-							//tableModelContacs->setData(tableModelContacs->index(row-1, 1),
-							//		QObject::trUtf8("OnLine"));
-
 							tableModelContacs->setData(tableModelContacs->index(row-1, 1), strStatusName);
 							tableModelContacs->setData(tableModelContacs->index(row-1, 2), nameUser);
 							tableModelContacs->setData(tableModelContacs->index(row-1, 3), nameSurname);
@@ -401,9 +414,9 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 							tableModelContacs->setData(tableModelContacs->index(row-1, 5), namePatronymic);
 							tableModelContacs->setData(tableModelContacs->index(row-1, 6), namePost);
 							tableModelContacs->setData(tableModelContacs->index(row-1, 7), ipAdressClient);
-							createNewMClient(ipAdressClient, setNumberPort, ipAdressString);
 							tableModelContacs->submitAll();
 							tableModelContacs->select();
+							createNewMClient(ipAdressClient, setNumberPort, ipAdressString);
 						}else if ((tableModelContacs->rowCount() == 1)&&
 								(tableModelContacs->data(tableModelContacs->index(row-1, 1)).toString() == "OnLine")) {
 
@@ -434,8 +447,6 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 		}
 
 	}
-
-
 }
 //-------------------------------------------------------------------------
 void MFormLocMes::deleteUserFromData()
@@ -584,7 +595,7 @@ void MFormLocMes::mCreateTray()
     trayStatusMenu = new QMenu(QObject::trUtf8("Статус"));
     trayStatusMenu->setIcon(QIcon(":/tray/icon/online.png"));
     trayStatusMenu->addAction(actionOnLine);
-    trayStatusMenu->addAction(actionOffLIne);
+    trayStatusMenu->addAction(actionOffLine);
     trayIconMenu->addMenu(trayStatusMenu);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(actionQuit);

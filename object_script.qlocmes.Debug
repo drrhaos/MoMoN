@@ -1,4 +1,6 @@
 INPUT(
+./debug\mudpclient.o
+./debug\mudpserver.o
 ./debug\mtcpsocket.o
 ./debug\mpopupmessage.o
 ./debug\MSqlTableModel.o
@@ -12,6 +14,8 @@ INPUT(
 ./debug\mtextedit.o
 ./debug\main.o
 ./debug\qlocmes.o
+./debug\moc_mudpclient.o
+./debug\moc_mudpserver.o
 ./debug\moc_mtcpsocket.o
 ./debug\moc_mpopupmessage.o
 ./debug\moc_MSqlTableModel.o

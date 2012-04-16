@@ -53,7 +53,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -560,19 +560,38 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="labelAdresServer">
+            <widget class="QLabel" name="labelInquiryStatus">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="text">
-              <string>Адрес сервера</string>
+              <string>Запрос статуса каждые</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditAdresServer">
-             <property name="enabled">
-              <bool>false</bool>
+            <widget class="QSpinBox" name="spinBoxInquiryStatus">
+             <property name="minimum">
+              <number>30</number>
+             </property>
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>3600</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelInquiryStatusSec">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>сек.</string>
              </property>
             </widget>
            </item>
@@ -704,7 +723,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QTableView" name="tableViewMyIp"/>
+            <widget class="QTableView" name="tableViewMyIp">
+             <attribute name="verticalHeaderDefaultSectionSize">
+              <number>19</number>
+             </attribute>
+             <attribute name="verticalHeaderDefaultSectionSize">
+              <number>19</number>
+             </attribute>
+            </widget>
            </item>
           </layout>
          </item>
@@ -889,7 +915,14 @@
                </layout>
               </item>
               <item>
-               <widget class="QTableView" name="tableViewNetFilter"/>
+               <widget class="QTableView" name="tableViewNetFilter">
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>19</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>19</number>
+                </attribute>
+               </widget>
               </item>
              </layout>
             </item>
@@ -918,7 +951,7 @@
        <item>
         <widget class="QCheckBox" name="checkBoxExpert">
          <property name="enabled">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="text">
           <string>Эксперт</string>
@@ -1003,7 +1036,6 @@
   <tabstop>tableViewNetFilter</tabstop>
   <tabstop>checkBoxExpert</tabstop>
   <tabstop>tableViewMyIp</tabstop>
-  <tabstop>lineEditAdresServer</tabstop>
  </tabstops>
  <resources>
   <include location="systray.qrc"/>
