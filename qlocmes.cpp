@@ -8,6 +8,7 @@
 #include "mudpserver.h"
 #include "mudpclient.h"
 
+
 MFormLocMes::MFormLocMes(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -38,22 +39,18 @@ MFormLocMes::MFormLocMes(QWidget *parent)
     mCreateTray();
 
 //добавление пользователя в список контактов при входящем подключении клиента
-	connect(myUdpClient,	SIGNAL(signalsNewUser(QString& , QString& ,
-								QString& ,QString& , QString& ,	QString& , QString& )),
-			this,		SLOT(addUser(QString& , QString& ,
-							 QString& ,QString& , QString& ,	QString& , QString&)));
+	connect(myUdpClient, SIGNAL(signalsNewUser()), this, SLOT(addUser()));
 //смена иконки при входящем сообещении
     connect(mainServer, SIGNAL(signalsNewEntering(QString , QString )),
     		this, 		SLOT(setTrayIconMessege(QString , QString )));
 //открытие окна сообщений при двойном нажатии на контакт
 	connect(treeView, 	SIGNAL(doubleClicked(QModelIndex)), this, SLOT(showMesseg()));
 //обновляет информацию о клиентах в бокоом меню
-	connect(treeView->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &,
-            													 const QModelIndex &)),
+	connect(treeView->selectionModel(), SIGNAL(currentRowChanged()),
             this, 						SLOT(updateInfoClient()));
 //открытие контекстного меню
-    connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)),
-    		this, 	  SLOT(showContextMenuTreeView(const QPoint &)));
+    connect(treeView, SIGNAL(customContextMenuRequested()),
+    		this, 	  SLOT(showContextMenuTreeView()));
 
 
 /*
@@ -79,8 +76,8 @@ MFormLocMes::MFormLocMes(QWidget *parent)
     		this,     SLOT(mouseClickedBehaviourTrayIcon(QSystemTrayIcon::ActivationReason)));
 
 //изменение размера при закрытии данных контакта
-    connect(dockWidgetData ,SIGNAL(visibilityChanged(bool )),
-    		this, SLOT(setVisibleDockWidgetData(bool )));
+    connect(dockWidgetData ,SIGNAL(visibilityChanged()),
+    		this, SLOT(setVisibleDockWidgetData()));
 
     trayIcon->setIcon(QIcon(":/tray/icon/offline.png"));
     trayIcon->show();
@@ -92,7 +89,7 @@ MFormLocMes::MFormLocMes(QWidget *parent)
     timerNewMessage = new QTimer();
     connect(timerNewMessage, SIGNAL(timeout ()), this, SLOT(slotIconNewMessage()));
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::createTableContacs()
 {
 	QSqlQuery query;
@@ -133,7 +130,7 @@ void MFormLocMes::createTableContacs()
 	playNewUser = tableModelSounds->data(tableModelSounds->index(2, 4)).toString();
 	playCloseUser = tableModelSounds->data(tableModelSounds->index(3, 4)).toString();
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::createTableNetFilter()
 {
 	tableModelNetFilter = new QSqlTableModel(this);
@@ -151,7 +148,7 @@ void MFormLocMes::createTableNetFilter()
 	tableModelSounds->setEditStrategy(QSqlRelationalTableModel::OnFieldChange);
 	tableModelSounds->select();
 }
-//-------------------------------------------------------------------
+
 void MFormLocMes::readSettings()
 {
 	QSettings mSettings("DrHaos", "qlocmes");
@@ -190,7 +187,7 @@ void MFormLocMes::readSettings()
 	(mSetting.value("Adres Server", lineEditAdresServer->text())).toString();
 */
 }
-//-------------------------------------------------------------------
+
 void MFormLocMes::playSounds(QString fileName)
 {
 	if (fileName.length()) {
@@ -292,6 +289,7 @@ void MFormLocMes::playSounds(QString fileName)
 
 	n->stop();
 }*/
+
 void MFormLocMes::connectToServer()
 {
 	n->stop();
@@ -305,7 +303,7 @@ void MFormLocMes::connectToServer()
     actionOnLine->setChecked(TRUE);
 	trayIcon->setIcon(QIcon(":/tray/icon/online.png"));
 }
-//--------------------------------------------------------------------------------------------
+
 void MFormLocMes::disconnectToServer()
 {
 //ЛАЖА
@@ -313,7 +311,7 @@ void MFormLocMes::disconnectToServer()
 	actionOffLine->setChecked(TRUE);
 	trayIcon->setIcon(QIcon(":/tray/icon/offline.png"));
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::returnMyIp()
 {
 //удаляет свои Ip адреса
@@ -362,11 +360,7 @@ void MFormLocMes::returnMyIp()
 	}
 
 }
-/*
- * --------------------------------------------------------------------------------------------
- * Добавление пользователя в список контактов
- * --------------------------------------------------------------------------------------------
- */
+
 void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 		QString&  nameSurname,QString& name, QString& namePatronymic,
 		QString& namePost, QString& ipAdressPullClient)
@@ -448,7 +442,7 @@ void MFormLocMes::addUser(QString& strStatusName, QString& nameUser,
 
 	}
 }
-//-------------------------------------------------------------------------
+
 void MFormLocMes::deleteUserFromData()
 {
     QModelIndex index = treeView->currentIndex();
@@ -458,7 +452,7 @@ void MFormLocMes::deleteUserFromData()
     tableModelContacs->submitAll();
     tableModelContacs->select();
 }
-//------------------------------------------------------------------------------------
+
 void MFormLocMes::diconectUser(QString& strHostName)
 {
 	QSqlQuery query;
@@ -466,9 +460,7 @@ void MFormLocMes::diconectUser(QString& strHostName)
 	tableModelContacs->submitAll();
 	tableModelContacs->select();
 }
-/*------------------------------------------------------------------------------------
- * открытие окна сообщений при двойном нажатии на контакт
- */
+
 void MFormLocMes::showMesseg()
 {
 	QModelIndex index = treeView->currentIndex();
@@ -501,9 +493,7 @@ void MFormLocMes::showMesseg()
 	tableModelContacs->submitAll();
 	tableModelContacs->select();
 }
-/*------------------------------------------------------------------------------------
- * открытие окна сообщений при нажатии на иконку в трее
- */
+
 void MFormLocMes::showMessegTree()
 {
 	QSqlQuery query;
@@ -532,7 +522,7 @@ void MFormLocMes::showMessegTree()
 	tableModelContacs->submitAll();
 	tableModelContacs->select();
 }
-//--------------------------------------------------------------------------
+
 /*virtual*/ void MFormLocMes::showPopup(QString name, QString message)
 {
 	if (coutPopupMessage < 10) {
@@ -544,7 +534,7 @@ void MFormLocMes::showMessegTree()
 		++coutPopupMessage;
 	}
 }
-//----------------------------------------------------------
+
 void MFormLocMes::editPositionPopup()
 {
 	for (int i = 1; i < coutPopupMessage; ++i) {
@@ -554,7 +544,7 @@ void MFormLocMes::editPositionPopup()
 	popMessage[coutPopupMessage-1] = NULL;
 	--coutPopupMessage;
 }
-//-----------------------------------------------------------------------------------------------
+
 void MFormLocMes::showContextMenuTreeView(const QPoint &pos)
 {
     QMenu menu(this);
@@ -564,7 +554,7 @@ void MFormLocMes::showContextMenuTreeView(const QPoint &pos)
     menu.exec(treeView->viewport()->mapToGlobal(pos));
 
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::showSetting()
 {
 	MSettings n;
@@ -572,7 +562,7 @@ void MFormLocMes::showSetting()
 	tableModelSounds->select();
 	tableModelNetFilter->select();
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::updateInfoClient()
 {
     QModelIndex index = treeView->currentIndex();
@@ -586,16 +576,16 @@ void MFormLocMes::setVisibleDockWidgetData(bool visibleDataContact)
 	QSettings mSettings("DrHaos", "qlocmes");
 	mSettings.setValue("Visible Dock Widget Data" ,visibleDataContact);
 }
-//----------------------------------------------------------------------
-//иконка в трее
-//----------------------------------------------------------------------
+
 void MFormLocMes::mCreateTray()
 {
     trayIconMenu = new QMenu(this);
     trayStatusMenu = new QMenu(QObject::trUtf8("Статус"));
     trayStatusMenu->setIcon(QIcon(":/tray/icon/online.png"));
+
     trayStatusMenu->addAction(actionOnLine);
     trayStatusMenu->addAction(actionOffLine);
+
     trayIconMenu->addMenu(trayStatusMenu);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(actionQuit);
@@ -603,7 +593,7 @@ void MFormLocMes::mCreateTray()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
 }
-//--------------------------------------------------------------------------
+
 void MFormLocMes::mouseClickedBehaviourTrayIcon(QSystemTrayIcon::ActivationReason reason)
 {
 //при клике по иконке в трее проверяет если это конверт то открывает
@@ -622,7 +612,7 @@ void MFormLocMes::mouseClickedBehaviourTrayIcon(QSystemTrayIcon::ActivationReaso
 		}
 	}
 }
-//--------------------------------------------------------------------------
+
 void MFormLocMes::setTrayIconMessege(QString statusMesseges, QString newEnteringMesseges)
 {
 	QSettings mSettings("DrHaos", "qlocmes");
@@ -654,12 +644,12 @@ void MFormLocMes::setTrayIconMessege(QString statusMesseges, QString newEntering
 
 	}
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::helpQlocmessege()
 {
 	QMessageBox::aboutQt(0);
 }
-//----------------------------------------------------------------------
+
 /*virtual*/void MFormLocMes::closeEvent(QCloseEvent *event)
 {
     if (trayIcon->isVisible()) {
@@ -667,7 +657,7 @@ void MFormLocMes::helpQlocmessege()
         event->ignore();
     }
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::slotIconNewMessage()
 {
 	trayIcon->setIcon(QIcon(":/tray/icon/messege1.png"));
@@ -703,7 +693,7 @@ void MFormLocMes::slotIconNewMessage()
 	}
 	trayIcon->setIcon(QIcon(":/tray/icon/online.png"));
 }
-//---------------private---------------------------------------------------
+
 QString MFormLocMes::returnsIpThirdPoint(QString ipAdress)
 {
 	int pixel = 0;
@@ -717,7 +707,7 @@ QString MFormLocMes::returnsIpThirdPoint(QString ipAdress)
 	}
 	return ipAdress;
 }
-//--------------------------------------------------------------------------------------------
+
 /*virtual*/void MFormLocMes::createNewMClient(QString& ipAdressHost,
 		int numberPortHost, QString& myIpAdress)
 {
@@ -725,7 +715,7 @@ QString MFormLocMes::returnsIpThirdPoint(QString ipAdress)
 	mainClient->slotConnectToHost(ipAdressHost, numberPortHost, myIpAdress);
 	connect(mainClient, SIGNAL(signalsDisConnected(QString& )), this, SLOT(diconectUser(QString& )));
 }
-//----------------------------------------------------------------------
+
 void MFormLocMes::moveWindowToCenter()
 {
 	QSettings mSetting("DrHaos", "qlocmes");
@@ -742,10 +732,9 @@ void MFormLocMes::moveWindowToCenter()
 		move(frect.topLeft());
 	}
 }
-//----------------------------------------------------------------------
+
 MFormLocMes::~MFormLocMes()
 {
 	QSettings mSettings("DrHaos", "qlocmes");
 	mSettings.setValue("Rect QlocMessege", geometry());
 }
-//--------------------------------------------------------------------------

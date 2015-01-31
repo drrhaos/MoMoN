@@ -1,6 +1,7 @@
+#include <QApplication>
 #include <QtGui>
 #include <QtSql>
-#include <QApplication>
+#include <qstyle.h>
 
 #include "qlocmes.h"
 #include "mcreateuser.h"

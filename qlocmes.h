@@ -41,63 +41,107 @@ class MFormLocMes : public QMainWindow, public Ui_qlocmes
     Q_OBJECT
 
 public:
+    //! \brief Конструктор по умолчанию.
     MFormLocMes(QWidget *parent = 0);
+
+    //! \brief Деструктор по умолчанию.
     ~MFormLocMes();
+
+    //! \brief Создать таблицу контактов.
     void createTableContacs();
+
+    //! \brief Создать таблицу IP адресов.
     void createTableNetFilter();
 
 private:
+    //! \brief Считать настройки.
     void readSettings();
+
+    //! \brief Воспроизвести звуковые ср=обытия.
     void playSounds(QString fileName);
 
 public slots:
+	//! \brief Рассылка сообщений о появлении в сети пользователя.
 	void connectToServer();
+
+	//! \brief Рассылка сообщения о выходе пользователя из сети.
 	void disconnectToServer();
+
+	//! \brief поиск активного IP адреса.
 	void returnMyIp();
 
+	/*!
+	 * \brief Добавляет нового пользователя появившегося в сети
+	 *
+	 */
 	void addUser(QString& strStatusName, QString& nameUser,
 			QString&  nameSurname,QString& name, QString& namePatronymic,
 			QString& namePost, QString& ipAdressPullClient);
+
+	//! \brief Удаление пользователя из списка контактов.
 	void deleteUserFromData();
+
+	//! \brief Обновляет статус пользователя. Выход пользователя из сети.
 	void diconectUser(QString& strHostName);
 
+	//! \brief Отображает окно сообщений.
 	void showMesseg();
+
+	//! \brief Открытие окна сообщений при нажатии на иконку в трее.
 	void showMessegTree();
+
+	//! \brief Открытие информационных сообщений (контакт в сети, пришло сообщение).
 	virtual void showPopup(QString name, QString message);
+
+	//! \brief Изменяет положение информационных сообщений.
 	void editPositionPopup();
 
+	//! \brief Заполняет контекстное меню.
 	void showContextMenuTreeView(const QPoint &pos);
 
+	//! \brief Открывает окно настроек.
 	void showSetting();
 
+	//! \brief Обновляет информацию о выбранном клиенте в информационном поле.
 	void updateInfoClient();
+
+	// \brief Отображает или нет информационное окно.
 	void setVisibleDockWidgetData(bool visibleDataContact);
 
+	// \brief Создает элементы меню.
 	void mCreateTray();
+
+	// \brief Обработчик события нажатия на иконку в трее.
 	void mouseClickedBehaviourTrayIcon(QSystemTrayIcon::ActivationReason reason);
+
+	// \brief Отображает иконку в трее.
 	void setTrayIconMessege(QString statusMesseges, QString newEnteringMesseges);
 
+	//! \brief Открывает окно помощи.
 	void helpQlocmessege();
 
+	//! \brief Переопределение события закрытия окна на сворачивание.
 	virtual void closeEvent(QCloseEvent *event);
+
+	//! \brief Анимация прихода нового сообщения.
 	void slotIconNewMessage();
 
 private:
 //настройки
 
-	bool setVisibleDock;
-	int setNumberPort;
-	QString setNameUser;
+	bool setVisibleDock; //!< Состояние видимости информационного поля.
+	int setNumberPort; //! < Текущий порт.
+	QString setNameUser; //! < Имя пользователя.
 
-    QAction *minimizeAction;
-    QAction *maximizeAction;
-    QAction *restoreAction;
-    QAction *quitAction;
+    QAction *minimizeAction; //! <
+    QAction *maximizeAction; //! <
+    QAction *restoreAction; //! <
+    QAction *quitAction; //! <
 
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayIconMenu;
-    QMenu *trayStatusMenu;
-    QMenu *mPopupMenu;
+    QSystemTrayIcon *trayIcon; //! <
+    QMenu *trayIconMenu; //! <
+    QMenu *trayStatusMenu; //! <
+    QMenu *mPopupMenu; //! <
 
 //последовательность своих адресов в строке
     QString ipAdressString;
@@ -126,9 +170,14 @@ private:
     MUdpServer *myUdpServer;
     MUdpClient *myUdpClient;
 private:
+    //! \brief Возвращает IP без последнего поля XXX.XXX.XXX.
 	QString returnsIpThirdPoint(QString ipAdress);
+
+	//! \brief Добавление нового подключенного клиента.
 	virtual void createNewMClient(QString& ipAdressHost,
 				 	 	 	 	  int numberPortHost, QString& myIpAdress);
+
+	//! \brief Отображение окна по центру.
 	void moveWindowToCenter();
 
 };

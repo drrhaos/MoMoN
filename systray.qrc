@@ -35,5 +35,6 @@
         <file>icon/font_underlining.png</file>
         <file>icon/smile.png</file>
         <file>icon/clear.png</file>
+        <file>icon/send_to_file2.png</file>
     </qresource>
 </RCC>

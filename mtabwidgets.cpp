@@ -8,8 +8,9 @@ MTabWidgets::MTabWidgets(QString& userNameTemp, MServer * mainServerTemp,
 {
 	setupUi(this);
 
-	QStringList colorNames;
+
 	strHost = ipClient;
+        QStringList colorNames;
     colorNames = QColor::colorNames();   //Если нужны не ВСЕ цвета, присутствущие в системе, разремируем данную строчку и ремируем следующую. Иначе, используем только те цвета, которые указаны строчкой ниже
     //colorNames <<"darkGreen"<<"green"<<"gray"<<"red"<<"white"<<"blue"<<"cyan"<<"darkMagenta"<<"yellow"<<"darkRed"<<"black"<<"magenta";
 

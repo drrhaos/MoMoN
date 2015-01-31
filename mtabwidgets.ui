@@ -267,7 +267,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset resource="systray.qrc">
-         <normaloff>:/button/icon/send_to_file.png</normaloff>:/button/icon/send_to_file.png</iconset>
+         <normaloff>:/button/icon/send_to_file2.png</normaloff>:/button/icon/send_to_file2.png</iconset>
        </property>
       </widget>
      </item>
